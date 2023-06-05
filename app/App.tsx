@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 import Landing from './src/screens/Landing';
 import * as SplashScreen from 'expo-splash-screen'
 import { useCallback } from 'react';
+import Navigation from './src/Navigation';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,13 +28,7 @@ export default function App() {
 
   return (
     <View onLayout={handleOnLayout} className='flex-1'>
-      <Landing />
+      <Navigation />
     </View>
   )
-
-  return (
-    <View className='flex-1 w-full bg-red-200 items-center justify-center '>
-      <StatusBar style="auto" />
-    </View>
-  );
 }
