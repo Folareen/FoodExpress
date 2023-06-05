@@ -33,7 +33,7 @@ const Login = () => {
                     console.log('login')
                 }
             }>
-                <Text className='text-[#ffffff] text-[16px] font-[normal]'>
+                <Text className='text-[#ffffff] text-[16px] font-[bold]'>
                     Login
                 </Text>
             </TouchableOpacity>

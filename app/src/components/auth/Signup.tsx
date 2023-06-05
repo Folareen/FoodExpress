@@ -46,7 +46,7 @@ const Signup = () => {
                     console.log('signup')
                 }
             }>
-                <Text className='text-[#ffffff] text-[16px] font-[normal]'>
+                <Text className='text-[#ffffff] text-[16px] font-[bold]'>
                     Signup
                 </Text>
             </TouchableOpacity>
