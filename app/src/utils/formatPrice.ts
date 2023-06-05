@@ -1,8 +1,8 @@
-const formatAmount = (amt : number) => {
-    if (amt == null || amt == undefined) {
+const formatPrice = (price : number) => {
+    if (price == null || price == undefined) {
         return 'N/A'
     }
-    let amount = String(amt)
+    let amount = String(price)
 
     const [intPart, decimalPart] = amount.split('.')
 
@@ -23,4 +23,4 @@ const formatAmount = (amt : number) => {
     return `${formatted}.${decimalPart}`
 };
 
-export default formatAmount
+export default formatPrice
