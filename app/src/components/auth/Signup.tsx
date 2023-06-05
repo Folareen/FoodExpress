@@ -41,7 +41,7 @@ const Signup = () => {
                 } className='border-b-[0.5px] border-solid border-black py-[4px] font-bold text-black text-[18px]' secureTextEntry />
             </View>
 
-            <TouchableOpacity className='bg-[#FF460A] rounded-[30px]  py-[20px] w-full mt-[80px] items-center ' onPress={
+            <TouchableOpacity className='bg-primary rounded-[30px]  py-[20px] w-full mt-[80px] items-center ' onPress={
                 () => {
                     console.log('signup')
                 }

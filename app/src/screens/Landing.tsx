@@ -20,7 +20,7 @@ const Landing = ({ navigation }: { navigation: any }) => {
                     navigation.navigate('home')
                 }
             }>
-                <Text className='text-[#FF460A] text-[16px] font-[bold]'>
+                <Text className='text-primary text-[16px] font-[bold]'>
                     Get Started
                 </Text>
             </TouchableOpacity>
