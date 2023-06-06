@@ -13,7 +13,6 @@ type ProductCardProps = {
 }
 
 const ProductCard = ({ navigation, img, title, price, images, slug, isSearchItem }: ProductCardProps) => {
-    console.log(img, 'hi')
     return (
         <TouchableOpacity onPress={() => {
             navigation.navigate('product-details', {
