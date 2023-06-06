@@ -8,6 +8,8 @@ import { FlatList } from 'react-native';
 import { urlFor } from '../config/sanityClient';
 import { Skeleton } from '@rneui/themed';
 import { Dimensions } from 'react-native';
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store';
 
 const Home = ({ navigation }: { navigation: any }) => {
     const [category, setCategory] = useState<{ title: string, _id: string } | null>(null)
@@ -37,6 +39,9 @@ const Home = ({ navigation }: { navigation: any }) => {
     }, [categories.data])
 
 
+    const { quantity } = useSelector((state: RootState) => state.cart)
+
+
 
     return (
         <View className='pt-[50px] pl-[50px] pb-[40px] flex-1 bg-[#EDEDED]'>
@@ -47,7 +52,10 @@ const Home = ({ navigation }: { navigation: any }) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     navigation.navigate('cart')
-                }}>
+                }} className='relative' >
+                    <Text className='bg-[#00000019] rounded-full absolute -top-4 -right-3 px-1.5 py-1 font-[bold]'>
+                        {quantity}
+                    </Text>
                     <Feather name="shopping-cart" size={24} color="black" style={{ opacity: 0.5 }} />
                 </TouchableOpacity>
             </View>
@@ -102,9 +110,9 @@ const Home = ({ navigation }: { navigation: any }) => {
                     <FlatList
                         className={`mt-[24px] -ml-[30px] ${data.length > 0 ? 'flex flex-row ' : ''}`}
                         data={data}
-                        keyExtractor={({ slug }) => slug}
+                        keyExtractor={({ slug }) => slug.current}
                         renderItem={({ item: { title, slug, cover_image, images, price } }) => (
-                            <ProductCard navigation={navigation} title={title} price={price} img={urlFor(cover_image?.asset).url()} images={images} isSearchItem={false} slug={slug} />
+                            <ProductCard navigation={navigation} title={title} price={price} img={urlFor(cover_image?.asset).url()} images={images} isSearchItem={false} slug={slug.current} />
                         )}
                         ListEmptyComponent={() => (
                             <View className='!flex-1 items-center justify-center h-[200px] '>
