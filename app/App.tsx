@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen'
 import { useCallback } from 'react';
 import Navigation from './src/Navigation';
+import 'react-native-url-polyfill/auto';
 
 SplashScreen.preventAutoHideAsync();
 
