@@ -2,8 +2,12 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'rea
 import React, { useState, useRef, useEffect } from 'react'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import formatPrice from '../utils/formatPrice'
+import { urlFor } from '../config/sanityClient'
+import { useRoute } from '@react-navigation/native'
 
 const ProductDetails = ({ navigation }: { navigation: any }) => {
+    const { params: { images, title, price, slug } } = useRoute<any>()
+
     const [currImgIndex, setCurrImgIndex] = useState(0)
 
     const scrollViewRef = useRef(null)
@@ -29,15 +33,10 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
                     setCurrImgIndex(pageNum);
                 }} >
                     {
-                        [
-                            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                        ].map(
-                            (img, index) => (
-                                <View className='w-screen items-center justify-center'>
-                                    <Image source={{ uri: img }} key={index} className='w-[240px] h-[240px] rounded-full ' />
+                        images?.map(
+                            (img: any, index: number) => (
+                                <View className='w-screen items-center justify-center' key={index}>
+                                    <Image source={{ uri: urlFor(img?.asset).url() }} key={index} className='w-[240px] h-[240px] rounded-full ' />
                                 </View>
                             )
                         )
@@ -45,7 +44,7 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
                 </ScrollView>
                 <View className='flex-row justify-center gap-6 my-[10px]'>
                     {
-                        [0, 1, 2, 3].map(
+                        [...Array(images.length).keys()].map(
                             (num) => (
                                 <TouchableOpacity className={`w-[8px] h-[8px] ${num == currImgIndex ? 'bg-primary' : 'bg-[#C4C4C4]'} rounded-full`} onPress={() => {
                                     scrollViewRef.current.scrollTo({
@@ -66,12 +65,12 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
 
             <View className='flex-row mb-[15px] mx-[50px]'>
                 <Text className='text-black text-[28px] font-[bold] text-center  flex-1 flex-wrap'>
-                    Veggie tomato mix
+                    {title}
                 </Text>
             </View>
             <View className='flex-row mx-[50px]'>
                 <Text className='text-primary font-[extrabold] text-center text-[22px] flex-1 flex-wrap'>
-                    &#8358;{formatPrice(1900)}
+                    &#8358;{formatPrice(price)}
                 </Text>
             </View>
 
@@ -95,7 +94,7 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
                 () => {
-                    console.log('add to cart')
+                    console.log(slug)
                 }
             }>
                 <Text className='text-[#ffffff] text-[16px] font-[bold]'>
