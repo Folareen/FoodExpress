@@ -74,10 +74,10 @@ const Search = ({ navigation }: { navigation: any }) => {
 
                                     {products?.map((arr) => (
                                         <View className='flex-row'>
-                                            <ProductCard images={arr[0]['images']} slug={arr[0]['slug']} navigation={navigation} title={arr[0]['title']} price={arr[0]['price']} img={urlFor(arr[0]['cover_image']?.asset).url()} isSearchItem={true} />
+                                            <ProductCard images={arr[0]['images']} slug={arr[0]['slug'].current} navigation={navigation} title={arr[0]['title']} price={arr[0]['price']} img={urlFor(arr[0]['cover_image']?.asset).url()} isSearchItem={true} />
                                             {
                                                 products.length % 2 == 0 && (
-                                                    <ProductCard images={arr[0]['images']} slug={arr[0]['slug']} navigation={navigation} title={arr[1]['title']} price={arr[1]['price']} img={urlFor(arr[1]['cover_image']?.asset).url()} isSearchItem={true} />
+                                                    <ProductCard images={arr[0]['images']} slug={arr[0]['slug'].current} navigation={navigation} title={arr[1]['title']} price={arr[1]['price']} img={urlFor(arr[1]['cover_image']?.asset).url()} isSearchItem={true} />
                                                 )
                                             }
                                         </View>
