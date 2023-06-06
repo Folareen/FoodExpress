@@ -16,7 +16,9 @@ const Home = ({ navigation }: { navigation: any }) => {
                 <TouchableOpacity>
                     <Feather name="menu" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('cart')
+                }}>
                     <Feather name="shopping-cart" size={24} color="black" style={{ opacity: 0.5 }} />
                 </TouchableOpacity>
             </View>
