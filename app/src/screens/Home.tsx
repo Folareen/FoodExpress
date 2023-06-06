@@ -108,7 +108,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                         )}
                         ListEmptyComponent={() => (
                             <View className='!flex-1 items-center justify-center h-[200px] '>
-                                <Text className='text-[28px]'>
+                                <Text className='text-[28px] font-[bold]'>
                                     No item found
                                 </Text>
                             </View>
