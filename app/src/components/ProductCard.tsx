@@ -23,12 +23,12 @@ const ProductCard = ({ navigation, img, title, price, isSearchItem }: ProductCar
             marginBottom: 60,
         }} >
             <Image source={{ uri: img }} className={`${isSearchItem ? 'w-[128px]' : 'w-[164px]'} ${isSearchItem ? 'h-[128px]' : 'h-[164px]'} rounded-full -mt-[76px] mx-auto`} />
-            <View className='flex-row mt-[25px] mb-[15px]'>
+            <View className='flex-row mt-[25px] mb-[15px] mx-2'>
                 <Text className='text-black text-[22px] font-[bold] text-center  flex-1 flex-wrap'>
                     {title}
                 </Text>
             </View>
-            <View className='flex-row'>
+            <View className='flex-row mx-2'>
                 <Text className='text-primary font-[extrabold] text-center text-[17px] flex-1 flex-wrap'>
                     &#8358;{formatPrice(price)}
                 </Text>
