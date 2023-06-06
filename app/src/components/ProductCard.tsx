@@ -16,6 +16,7 @@ const ProductCard = ({ navigation, img, title, price, images, slug, isSearchItem
     return (
         <TouchableOpacity onPress={() => {
             navigation.navigate('product-details', {
+                cover_img: img,
                 images,
                 title,
                 price,
