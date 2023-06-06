@@ -1,45 +1,43 @@
 import { View, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/ProductCard'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Feather } from '@expo/vector-icons'
+import useSanityFetch from '../hooks/useSanityFetch';
+import { Skeleton } from '@rneui/themed';
+import { Dimensions } from 'react-native';
+import { urlFor } from '../config/sanityClient';
 
-const data = [
-    {
-        img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-        title: 'Veggie tomato mix',
-        price: 1900
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-        title: 'Veggie tomato mix',
-        price: 1900
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-        title: 'Veggie tomato mix',
-        price: 1900
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-        title: 'Veggie tomato mix',
-        price: 1900
-    }
-]
 
 const Search = ({ navigation }: { navigation: any }) => {
-    const [products, setProducts] = useState([])
+    const [searchTerm, setSearchTerm] = useState<string>('')
+
+    const { data, loading, error } = useSanityFetch(`
+        *[_type == "product" && title match "${searchTerm}"]{
+                    title,
+                    slug,
+                    cover_image,
+                    images,
+                    price,
+                }
+    `, [searchTerm])
+
+
+    const [products, setProducts] = useState<any[]>(null)
+
 
     useEffect(() => {
-        const newArray = data.reduce((acc, obj, index) => {
-            if (index % 2 === 0) {
-                acc.push([obj]);
-            } else {
-                acc[acc.length - 1].push(obj);
-            }
-            return acc;
-        }, []);
-        setProducts(newArray)
-    }, [])
+        if (data.length > 0) {
+            const newArray = data.reduce((acc, obj, index) => {
+                if (index % 2 === 0) {
+                    acc.push([obj]);
+                } else {
+                    acc[acc.length - 1].push(obj);
+                }
+                return acc;
+            }, []);
+            setProducts(newArray)
+        }
+    }, [data])
 
 
     return (
@@ -50,25 +48,60 @@ const Search = ({ navigation }: { navigation: any }) => {
                 }}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
-                <TextInput placeholder='Start typing...' className='ml-[35px] text-[17px] font-bold flex-1' placeholderTextColor={'#0000007f'} />
+                <TextInput placeholder='Start typing...' className='ml-[35px] text-[17px] font-[bold] flex-1' placeholderTextColor={'#0000007f'} value={searchTerm} onChangeText={(text: string) => {
+                    setSearchTerm(text)
+                }} />
             </View>
 
-            <View className='bg-white rounded-t-[30px] py-[35px]'>
-                <Text className='text-center font-[extrabold] text-[28px] mb-[40px] '>
-                    Found 6 results
-                </Text>
+            {
+                (data.length > 0 || loading) ?
 
-                <ScrollView>
-                    {products.map((arr) => (
-                        <View className='flex-row'>
-                            <ProductCard navigation={navigation} title={arr[0]['title']} price={arr[0]['price']} img={arr[0]['img']} isSearchItem={true} />
-                            <ProductCard navigation={navigation} title={arr[1]['title']} price={arr[1]['price']} img={arr[1]['img']} isSearchItem={true} />
-                        </View>
-                    ))
-                    }
-                </ScrollView>
 
-            </View>
+                    <View className='bg-white rounded-t-[30px] py-[35px] flex-1'>
+                        <Text className='text-center font-[extrabold] text-[28px] mb-[40px] '>
+                            Found {data.length} result{data.length > 1 ? 's' : ''}
+                        </Text>
+
+
+                        {
+                            loading ?
+                                <View style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row' }}>
+                                    <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ borderRadius: 40 }} />
+                                    <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ marginLeft: 20, borderRadius: 40 }} />
+                                </View>
+                                :
+                                <ScrollView>
+
+                                    {products?.map((arr) => (
+                                        <View className='flex-row'>
+                                            <ProductCard images={arr[0]['images']} slug={arr[0]['slug']} navigation={navigation} title={arr[0]['title']} price={arr[0]['price']} img={urlFor(arr[0]['cover_image']?.asset).url()} isSearchItem={true} />
+                                            {
+                                                products.length % 2 == 0 && (
+                                                    <ProductCard images={arr[0]['images']} slug={arr[0]['slug']} navigation={navigation} title={arr[1]['title']} price={arr[1]['price']} img={urlFor(arr[1]['cover_image']?.asset).url()} isSearchItem={true} />
+                                                )
+                                            }
+                                        </View>
+                                    ))
+                                    }
+                                </ScrollView>
+
+                        }
+
+                    </View>
+
+                    :
+                    <View className='flex-1 bg-[#F5F5F8] items-center justify-center'>
+                        <Feather name="search" size={96} color="#C7C7C7" />
+                        <Text className='text-[28px] font-[bold] mt-[30px] text-center'>
+                            No item found
+                        </Text>
+                        <Text className='text-[17px] font-[normal] opacity-50 mt-[17px] text-center'>
+                            Try searching the item with {'\n'}
+                            a different keyword.
+                        </Text>
+                    </View>
+
+            }
         </View>
     )
 }
