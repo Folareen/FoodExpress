@@ -11,9 +11,9 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
 
   const [isLoaded] = useFonts({
-    "normal": require("./src/assets/fonts/Ubuntu-Light.ttf"),
-    "bold": require("./src/assets/fonts/Ubuntu-Medium.ttf"),
-    "extrabold": require("./src/assets/fonts/Ubuntu-Bold.ttf"),
+    "normal": require("./src/assets/fonts/Nunito-Regular.ttf"),
+    "bold": require("./src/assets/fonts/Nunito-SemiBold.ttf"),
+    "extrabold": require("./src/assets/fonts/Nunito-ExtraBold.ttf"),
   });
 
   const handleOnLayout = useCallback(async () => {
