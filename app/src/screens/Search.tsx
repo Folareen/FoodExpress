@@ -22,7 +22,7 @@ const Search = ({ navigation }: { navigation: any }) => {
     `, [searchTerm])
 
 
-    const [products, setProducts] = useState<any[]>(null)
+    const [products, setProducts] = useState<any[]>([])
 
 
     useEffect(() => {
