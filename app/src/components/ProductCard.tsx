@@ -7,13 +7,21 @@ type ProductCardProps = {
     img: string,
     title: string,
     price: number,
+    slug: string,
+    images: any[],
     isSearchItem: Boolean
 }
 
-const ProductCard = ({ navigation, img, title, price, isSearchItem }: ProductCardProps) => {
+const ProductCard = ({ navigation, img, title, price, images, slug, isSearchItem }: ProductCardProps) => {
+    console.log(img, 'hi')
     return (
         <TouchableOpacity onPress={() => {
-            navigation.navigate('product-details')
+            navigation.navigate('product-details', {
+                images,
+                title,
+                price,
+                slug
+            })
         }} className={`${isSearchItem ? 'mx-[5%]' : 'mx-[30px]'} rounded-[30px] bg-white mt-[51px] py-[25px] ${!isSearchItem && 'px-[25px]'} ${isSearchItem && 'w-[40%]'}`} style={{
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 2 },
