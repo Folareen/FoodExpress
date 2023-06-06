@@ -4,13 +4,22 @@ import { AntDesign, Feather } from '@expo/vector-icons'
 import formatPrice from '../utils/formatPrice'
 import { urlFor } from '../config/sanityClient'
 import { useRoute } from '@react-navigation/native'
+import { useSelector } from "react-redux"
+import { RootState } from '../redux/store'
+import { useDispatch } from 'react-redux'
+import { addProduct, removeProduct } from '../redux/features/cartSlice'
 
 const ProductDetails = ({ navigation }: { navigation: any }) => {
-    const { params: { images, title, price, slug } } = useRoute<any>()
+    const { params: { cover_img, images, title, price, slug } } = useRoute<any>()
 
     const [currImgIndex, setCurrImgIndex] = useState(0)
 
     const scrollViewRef = useRef(null)
+
+    const { products } = useSelector((state: RootState) => state.cart)
+    const dispatch = useDispatch()
+
+    console.log(slug, 'sluggg')
 
     return (
         <View className='bg-[#F6F6F9] flex-1'>
@@ -92,17 +101,28 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
                 </Text>
             </View>
 
-            <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
-                () => {
-                    console.log(slug)
-                }
-            }>
-                <Text className='text-[#ffffff] text-[16px] font-[bold]'>
-                    Add to cart
-                </Text>
-            </TouchableOpacity>
-
-
+            {
+                products.find(pd => pd.slug == slug) ?
+                    <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
+                        () => {
+                            dispatch(removeProduct({ slug }))
+                        }
+                    }>
+                        <Text className='text-[#ffffff] text-[16px] font-[bold]'>
+                            Remove from cart
+                        </Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
+                        () => {
+                            dispatch(addProduct({ title, quantity: 1, price, cover_img, slug }))
+                        }
+                    }>
+                        <Text className='text-[#ffffff] text-[16px] font-[bold]'>
+                            Add to cart
+                        </Text>
+                    </TouchableOpacity>
+            }
         </View>
     )
 }
