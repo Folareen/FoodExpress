@@ -3,16 +3,21 @@ import React, { useRef } from 'react'
 import { Swipeable } from 'react-native-gesture-handler';
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import formatPrice from '../utils/formatPrice';
+import { useDispatch } from 'react-redux'
+import { addProduct, decreaseQty, increaseQty, removeProduct } from '../redux/features/cartSlice';
 
 type CartItemProps = {
     prevCard: any,
     setPrevCard: any,
     img: string,
     title: string,
-    price: number
+    price: number,
+    quantity: number,
+    slug: string
 }
 
-const CartItem = ({ prevCard, setPrevCard, img, title, price }: CartItemProps) => {
+const CartItem = ({ prevCard, setPrevCard, img, title, price, quantity, slug }: CartItemProps) => {
+    const dispatch = useDispatch()
 
     const cardRef = useRef(null)
 
@@ -39,7 +44,9 @@ const CartItem = ({ prevCard, setPrevCard, img, title, price }: CartItemProps) =
                 <TouchableOpacity className='bg-primary p-[14px] rounded-full'>
                     <Feather name="heart" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity className='bg-primary p-[14px] rounded-full ml-2'>
+                <TouchableOpacity className='bg-primary p-[14px] rounded-full ml-2' onPress={() => {
+                    dispatch(removeProduct({ slug }))
+                }}>
                     <MaterialIcons name="delete" size={24} color="white" />
                 </TouchableOpacity>
             </View>
@@ -73,13 +80,21 @@ const CartItem = ({ prevCard, setPrevCard, img, title, price }: CartItemProps) =
                             &#8358;{formatPrice(price)}
                         </Text>
                         <View className='flex-row bg-primary rounded-[30px] items-center'>
-                            <TouchableOpacity className='px-1.5'>
+                            <TouchableOpacity className='px-1.5' onPress={() => {
+                                if (quantity > 1) {
+                                    dispatch(decreaseQty({ slug }))
+                                } else if (quantity == 1) {
+                                    dispatch(removeProduct({ slug }))
+                                }
+                            }}>
                                 <AntDesign name="minus" size={18} color="white" />
                             </TouchableOpacity>
                             <Text className='text-[13px] text-white py-1'>
-                                3
+                                {quantity}
                             </Text>
-                            <TouchableOpacity className='px-1.5'>
+                            <TouchableOpacity className='px-1.5' onPress={() => {
+                                dispatch(increaseQty({ slug }))
+                            }}>
                                 <AntDesign name="plus" size={18} color="white" />
                             </TouchableOpacity>
                         </View>

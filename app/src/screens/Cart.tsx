@@ -3,9 +3,15 @@ import React, { useState } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
 import CartItem from '../components/CartItem'
+import { RootState } from '../redux/store'
+import { useSelector } from 'react-redux'
+import formatPrice from '../utils/formatPrice'
 
 const Cart = ({ navigation }: { navigation: any }) => {
     const [prevCard, setPrevCard] = useState(null)
+
+    const { products, quantity, subTotal } = useSelector((state: RootState) => state.cart)
+
 
     return (
         <GestureHandlerRootView className='bg-[#F6F6F9] flex-1'>
@@ -31,35 +37,25 @@ const Cart = ({ navigation }: { navigation: any }) => {
             <View>
                 <ScrollView >
                     {
-                        [
-                            {
-                                img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                                title: 'Veggie tomato mix',
-                                price: 1900
-                            },
-                            {
-                                img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                                title: 'Veggie tomato mix',
-                                price: 1900
-                            },
-                            {
-                                img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                                title: 'Veggie tomato mix',
-                                price: 1900
-                            },
-                            {
-                                img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80',
-                                title: 'Veggie tomato mix',
-                                price: 1900
-                            }
-                        ].map(
-                            ({ img, title, price }) => (
-                                <CartItem prevCard={prevCard} setPrevCard={setPrevCard} img={img} title={title} price={price} />
+                        products?.map(
+                            ({ cover_img, title, price, slug }) => (
+                                <CartItem prevCard={prevCard} setPrevCard={setPrevCard} img={cover_img} title={title} price={price} quantity={products.find((pd) => pd.slug == slug)?.quantity} slug={slug} />
                             )
                         )
                     }
+
                 </ScrollView>
             </View>
+
+            <View className='mt-auto mb-[90px] flex flex-row justify-between w-4/5 items-center mx-auto'>
+                <Text className='text-[17px] font-[normal]'>
+                    Total
+                </Text>
+                <Text className='text-[22px] font-[bold]'>
+                    &#8358;{formatPrice(subTotal)}
+                </Text>
+            </View>
+
 
             <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
                 () => {
