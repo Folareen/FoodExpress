@@ -90,7 +90,7 @@ const Home = ({ navigation }: { navigation: any }) => {
             </View>
 
             {
-                loading ?
+                (loading || categories.loading) ?
                     <View>
 
                         <ScrollView horizontal style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row' }}>
