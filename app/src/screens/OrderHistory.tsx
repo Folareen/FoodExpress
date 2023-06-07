@@ -18,7 +18,7 @@ const OrderHistory = ({ navigation }: { navigation: any }) => {
         (async () => {
             try {
                 setFetching(true)
-                const { data } = await api.get('/orders')
+                const { data } = await api.get('orders')
                 setOrders(data.orders)
             } catch (err: any) {
                 console.log(err.message)
