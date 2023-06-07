@@ -101,14 +101,16 @@ const Home = ({ navigation }: { navigation: any }) => {
                 (loading || categories.loading) ?
                     <View>
 
-                        <ScrollView horizontal style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row' }}>
+                        <ScrollView horizontal style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row' }} showsHorizontalScrollIndicator={false}>
                             <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ borderRadius: 40 }} />
                             <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ marginLeft: 20, borderRadius: 40 }} />
                         </ScrollView>
                     </View>
                     :
                     <FlatList
-                        className={`mt-[24px] -ml-[30px] ${data.length > 0 ? 'flex flex-row ' : ''}`}
+                        horizontal={data.length > 0}
+                        showsHorizontalScrollIndicator={false}
+                        className={`mt-[24px] -ml-[30px]`}
                         data={data}
                         keyExtractor={({ slug }) => slug.current}
                         renderItem={({ item: { title, slug, cover_image, images, price } }) => (
