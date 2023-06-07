@@ -19,8 +19,6 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
     const { products } = useSelector((state: RootState) => state.cart)
     const dispatch = useDispatch()
 
-    console.log(slug, 'sluggg')
-
     return (
         <View className='bg-[#F6F6F9] flex-1'>
             <View className='mt-[60px] mx-[42px] mb-[10px] flex-row items-center justify-between'>

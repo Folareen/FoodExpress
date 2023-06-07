@@ -6,7 +6,6 @@ import formatPrice from '../utils/formatPrice'
 type Props = { items: { items: { cover_img: string, title: string, price: number, quantity: string }[] } }
 
 const OrderHistoryCard = ({ items }: Props) => {
-    console.log(items, 'itemss')
     return (
         <View className=''>
 
