@@ -44,7 +44,7 @@ const Home = ({ navigation }: { navigation: any }) => {
 
 
     return (
-        <View className='pt-[50px] pl-[50px] pb-[40px] flex-1 bg-[#EDEDED]'>
+        <View className='pt-[50px] pl-[50px] pb-[20px] flex-1 bg-[#EDEDED]'>
 
             <View className="justify-between flex-row pr-[40px]">
                 <TouchableOpacity>
@@ -127,7 +127,7 @@ const Home = ({ navigation }: { navigation: any }) => {
             }
 
 
-            <View className='mt-auto flex-row justify-between pr-[50px]'>
+            <View className='mt-auto flex-row justify-between pr-[50px] items-center '>
                 <TouchableOpacity>
                     <Entypo name="home" size={24} color="#FA4A0C" />
                 </TouchableOpacity>
