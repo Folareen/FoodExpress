@@ -4,7 +4,7 @@ const BASE_URL = 'http://192.168.231.156:5000/api/v1'
 
 const api = axios.create({
     baseURL: BASE_URL,
-    headers: {         
+    headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json;charse=UTF-8'
     },
@@ -12,11 +12,11 @@ const api = axios.create({
 })
 
 export const setAxiosToken = (token: string) => {
-      if (token) {
-    axios.defaults.headers.common['authorization'] = `Bearer ${token}`;
-  } else {
-    delete axios.defaults.headers.common['authorization'];
-  }
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+        delete axios.defaults.headers.common['Authorization'];
+    }
 }
 
 export default api
