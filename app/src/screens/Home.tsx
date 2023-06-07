@@ -1,15 +1,18 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import ProductCard from '../components/ProductCard';
 import useSanityFetch from '../hooks/useSanityFetch';
 import { FlatList } from 'react-native';
 import { urlFor } from '../config/sanityClient';
-import { Skeleton } from '@rneui/themed';
+import { Overlay, Skeleton } from '@rneui/themed';
 import { Dimensions } from 'react-native';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/store';
+import { ActivityIndicator } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { logout } from '../redux/features/authSlice';
 
 const Home = ({ navigation }: { navigation: any }) => {
     const [category, setCategory] = useState<{ title: string, _id: string } | null>(null)
@@ -39,7 +42,118 @@ const Home = ({ navigation }: { navigation: any }) => {
     }, [categories.data])
 
 
+    const { user } = useSelector((state: RootState) => state.auth)
     const { quantity } = useSelector((state: RootState) => state.cart)
+
+    const [showSidebar, setShowSidebar] = useState(true)
+    const [loggingOut, setLoggingOut] = useState(false)
+    const [logoutErr, setLogoutErr] = useState('')
+
+    const dispatch = useDispatch()
+
+    if (showSidebar) {
+        return (
+            <View className='flex-1 bg-[#FA4A0C] p-[50px] justify-center relative'>
+
+
+                <Overlay isVisible={loggingOut}>
+                    <View>
+                        <ActivityIndicator size="large" color="#FF460A" />
+                        <Text className='font-[bold] text-[17px] mt-1'>
+                            Please wait...
+                        </Text>
+                    </View>
+                </Overlay>
+                <Overlay isVisible={logoutErr.length > 0} onBackdropPress={() => {
+                    setLogoutErr('')
+                }}>
+                    <View>
+                        <Text className='font-[bold] text-[17px] mt-1 text-red-500'>
+                            {error}
+                        </Text>
+                    </View>
+                </Overlay>
+
+                <TouchableOpacity onPress={() => setShowSidebar(false)} className='absolute top-14 right-14'>
+                    <Feather name="menu" size={24} color="white" />
+                </TouchableOpacity>
+
+                <TouchableOpacity className={`flex-row items-center ${user ? 'mt-[200px]' : ''}`} onPress={() => {
+                    navigation.navigate('account')
+                }}>
+                    <View className={'p-[10px] mr-[12px] mb-[18px]'}>
+                        <MaterialCommunityIcons name="account-circle-outline" size={24} color="white" />
+                    </View>
+                    <Text className=' text-[17px] text-white font-[bold] border-b-[1px] border-[#ffffff6e] pb-[22px] flex-1'>
+                        Profile
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity className='flex-row items-center' onPress={() => {
+                    navigation.navigate('history')
+                }}>
+                    <View className={'p-[10px] mr-[12px] mb-[18px]'}>
+                        <MaterialCommunityIcons name="cart-arrow-down" size={24} color="white" />
+                    </View>
+                    <Text className=' text-[17px] text-white font-[bold] border-b-[1px] border-[#ffffff6e] pb-[22px] flex-1'>
+                        Orders
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity className='flex-row items-center'>
+                    <View className={'p-[10px] mr-[12px] mb-[18px]'}>
+                        <AntDesign name="tag" size={24} color="white" />
+                    </View>
+                    <Text className=' text-[17px] text-white font-[bold] border-b-[1px] border-[#ffffff6e] pb-[22px] flex-1'>
+                        Offer and promo
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity className='flex-row items-center'>
+                    <View className={'p-[10px] mr-[12px] mb-[18px]'}>
+                        <MaterialIcons name="sticky-note-2" size={24} color="white" />
+                    </View>
+                    <Text className=' text-[17px] text-white font-[bold] border-b-[1px] border-[#ffffff6e] pb-[22px] flex-1'>
+                        Privacy policy
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity className='flex-row items-center'>
+                    <View className={'p-[10px] px-[13px] mr-[12px] mb-[12px]'}>
+                        <FontAwesome name="shield" size={24} color="white" />
+                    </View>
+                    <Text className=' text-[17px] text-white font-[bold] pb-[18px] flex-1'>
+                        Security
+                    </Text>
+                </TouchableOpacity>
+
+                {
+                    user &&
+                    <TouchableOpacity className='flex-row items-center mt-auto' onPress={
+                        async () => {
+                            try {
+                                setLoggingOut(true)
+                                await AsyncStorage.removeItem('token')
+                                dispatch(logout())
+                            } catch (error: any) {
+                                setLogoutErr(error.message)
+                            } finally {
+                                setLoggingOut(false)
+                            }
+                        }
+                    }>
+                        <Text className=' text-[17px] text-white font-[bold] mr-4'>
+                            Sign-out
+                        </Text>
+                        <AntDesign name="arrowright" size={24} color="white" />
+                    </TouchableOpacity>
+                }
+
+
+
+            </View>
+        )
+    }
 
 
 
@@ -47,7 +161,7 @@ const Home = ({ navigation }: { navigation: any }) => {
         <View className='pt-[50px] pl-[50px] pb-[20px] flex-1 bg-[#EDEDED]'>
 
             <View className="justify-between flex-row pr-[40px]">
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setShowSidebar(true)}>
                     <Feather name="menu" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
