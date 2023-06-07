@@ -85,7 +85,7 @@ const Home = ({ navigation }: { navigation: any }) => {
                                 categories.data?.map((cgy) => (
                                     <TouchableOpacity onPress={() => {
                                         setCategory(cgy)
-                                    }} className={`px-[20px] py-[10px] ${category?.title == cgy.title ? 'border-b-[3px] border-solid border-primary' : 'border-0'}`}>
+                                    }} className={`px-[20px] py-[10px] ${category?.title == cgy.title ? 'border-b-[3px] border-solid border-primary' : 'border-0'}`} key={cgy._id}>
                                         <Text className={`capitalize  ${category?.title == cgy.title ? 'text-primary' : 'text-[#9A9A9D]'} font-[normal] text-[17px] `}>
                                             {cgy.title}
                                         </Text>

@@ -20,7 +20,7 @@ const Auth = () => {
                                         () => {
                                             setCurrForm(item)
                                         }
-                                    } className=' py-[16px] flex-row justify-center w-1/2'>
+                                    } className=' py-[16px] flex-row justify-center w-1/2' key={item}>
                                         <Text className=' text-[18px] capitalize font-[bold]'>
                                             {item}
                                         </Text>

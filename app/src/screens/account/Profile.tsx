@@ -71,7 +71,7 @@ const Profile = ({ navigation }: { navigation: any }) => {
             <View>
                 {
                     ['Orders', 'Pending reviews', 'Faq', 'Help'].map((btn) => (
-                        <TouchableOpacity className='mt-[25px] rounded-[20px] bg-white p-[20px] flex-row justify-between'>
+                        <TouchableOpacity className='mt-[25px] rounded-[20px] bg-white p-[20px] flex-row justify-between' key={btn}>
                             <Text className='text-[18px] font-[bold]'>
                                 {btn}
                             </Text>

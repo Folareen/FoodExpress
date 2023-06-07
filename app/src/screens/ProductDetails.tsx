@@ -62,7 +62,7 @@ const ProductDetails = ({ navigation }: { navigation: any }) => {
                                         animated: true,
                                     });
                                     setCurrImgIndex(num)
-                                }}>
+                                }} key={num}>
                                 </TouchableOpacity>
                             )
                         )
