@@ -12,7 +12,7 @@ const OrderHistoryCard = ({ items }: Props) => {
             {
                 items.items.map(({ cover_img, title, price, quantity }, index) => {
                     return (
-                        <View className={` border-b-[1px] border-gray-400   flex-row justify-between items-center py-2`}>
+                        <View className={` border-b-[1px] border-gray-400   flex-row justify-between items-center py-2`} key={index}>
                             <Image source={{ uri: cover_img }} className='w-[20px] h-[20px] rounded-full' />
                             <Text className='text-[14px] font-bold'>
                                 {title}
