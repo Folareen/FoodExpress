@@ -59,11 +59,11 @@ const Cart = ({ navigation }: { navigation: any }) => {
 
             <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
                 () => {
-                    console.log('checkout')
+                    navigation.navigate('checkout')
                 }
             }>
                 <Text className='text-[#ffffff] text-[16px] font-[bold]'>
-                    Checkout
+                    Proceed to checkout
                 </Text>
             </TouchableOpacity>
 
