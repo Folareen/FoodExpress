@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const BASE_URL = 'http://192.168.231.156:5000/api/v1'
+const BASE_URL = 'https://foodexpress-aal8.onrender.com/api/v1'
 
 const api = axios.create({
     baseURL: BASE_URL,
