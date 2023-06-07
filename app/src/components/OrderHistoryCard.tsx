@@ -17,11 +17,11 @@ const OrderHistoryCard = ({ items }: Props) => {
                             <Text className='text-[14px] font-bold'>
                                 {title}
                             </Text>
-                            <Text className='text-primary font-[bold] text-[12px] '>
-                                &#8358;{formatPrice(price)}
-                            </Text>
                             <Text className='text-[13px] text-black py-1'>
                                 {quantity}
+                            </Text>
+                            <Text className='text-primary font-[bold] text-[11px] '>
+                                &#8358;{formatPrice(price)}
                             </Text>
                         </View>
                     )
