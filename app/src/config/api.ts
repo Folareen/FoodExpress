@@ -7,7 +7,8 @@ const api = axios.create({
     headers: {         
         Accept: 'application/json',
         'Content-Type': 'application/json;charse=UTF-8'
-    }
+    },
+    timeout: 8000
 })
 
 export const setAxiosToken = (token: string) => {
