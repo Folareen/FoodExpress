@@ -45,7 +45,7 @@ const Home = ({ navigation }: { navigation: any }) => {
     const { user } = useSelector((state: RootState) => state.auth)
     const { quantity } = useSelector((state: RootState) => state.cart)
 
-    const [showSidebar, setShowSidebar] = useState(true)
+    const [showSidebar, setShowSidebar] = useState(false)
     const [loggingOut, setLoggingOut] = useState(false)
     const [logoutErr, setLogoutErr] = useState('')
 
