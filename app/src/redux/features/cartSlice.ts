@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Toast from 'react-native-root-toast'
 
-type ProductType = {title: string, quantity: number, price: number, cover_img : string, slug: string }
+type ProductType = { title: string, quantity: number, price: number, cover_img: string, slug: string }
 
-const initialState : {
-    products : ProductType[],
-    quantity: number,
-    subTotal: number
-}   = {
+const initialState: {
+  products: ProductType[],
+  quantity: number,
+  subTotal: number
+} = {
   products: [],
   quantity: 0,
   subTotal: 0.0,
@@ -17,25 +18,35 @@ const cart = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
-        const newCart = {
-          products: [
-            ...state.products,
-            action.payload,
-          ],
-          quantity:
-            action.payload.quantity +
-            state.quantity,
-          subTotal: (
-            Number(state.subTotal) +
-            Number(
-              action.payload.quantity *
-                action.payload.price
-            )
-          ).toFixed(2),
-            }
-        state.products = newCart.products;
-        state.quantity = newCart.quantity;
-        state.subTotal = Number(newCart.subTotal);
+      const newCart = {
+        products: [
+          ...state.products,
+          action.payload,
+        ],
+        quantity:
+          action.payload.quantity +
+          state.quantity,
+        subTotal: (
+          Number(state.subTotal) +
+          Number(
+            action.payload.quantity *
+            action.payload.price
+          )
+        ).toFixed(2),
+      }
+      state.products = newCart.products;
+      state.quantity = newCart.quantity;
+      state.subTotal = Number(newCart.subTotal);
+      Toast.show(`${action.payload.title} added to cart!`, {
+        duration: Toast.durations.SHORT,
+        position: 60,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: 'green',
+        textColor: '#fff'
+      });
     },
     increaseQty: (state, action) => {
 
@@ -45,7 +56,7 @@ const cart = createSlice({
 
       if (product) {
         const productIndex = state.products.findIndex(
-          (product : ProductType) => {
+          (product: ProductType) => {
             return product.slug == action.payload.slug;
           }
         );
@@ -58,13 +69,13 @@ const cart = createSlice({
           quantity:
             state.quantity + 1,
           subTotal: (
-            Number(state.subTotal) + Number( product.price) 
+            Number(state.subTotal) + Number(product.price)
           ).toFixed(2),
         };
         state.products = newCart.products;
         state.quantity = newCart.quantity;
         state.subTotal = Number(newCart.subTotal);
-      } 
+      }
     },
     decreaseQty: (state, action) => {
       const product = state.products.find((product) => {
@@ -73,7 +84,7 @@ const cart = createSlice({
 
       if (product) {
         const productIndex = state.products.findIndex(
-          (product : ProductType) => {
+          (product: ProductType) => {
             return product.slug == action.payload.slug;
           }
         );
@@ -86,21 +97,21 @@ const cart = createSlice({
           quantity:
             state.quantity - 1,
           subTotal: (
-            Number(state.subTotal) - Number( product.price) 
+            Number(state.subTotal) - Number(product.price)
           ).toFixed(2),
         };
         state.products = newCart.products;
         state.quantity = newCart.quantity;
         state.subTotal = Number(newCart.subTotal);
-      } 
+      }
     },
     removeProduct: (state, action) => {
-      const productToRemove = state.products.find((product : ProductType) => {
+      const productToRemove = state.products.find((product: ProductType) => {
         return product.slug == action.payload.slug;
       });
 
-      const productToRemoveIndex  = state.products.findIndex(
-        (product : ProductType) => {
+      const productToRemoveIndex = state.products.findIndex(
+        (product: ProductType) => {
           return product.slug == action.payload.slug;
         }
       );
@@ -119,6 +130,16 @@ const cart = createSlice({
       state.quantity = newCart.quantity;
       state.subTotal = Number(newCart.subTotal);
 
+      Toast.show(`${productToRemove.title} removed from cart!`, {
+        duration: Toast.durations.SHORT,
+        position: 60,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+        backgroundColor: 'red',
+        textColor: '#fff'
+      });
     },
     clearCart: (state) => {
       state.products = [];
@@ -128,6 +149,6 @@ const cart = createSlice({
   },
 });
 
-export const {  addProduct, increaseQty, decreaseQty, removeProduct, clearCart } =
+export const { addProduct, increaseQty, decreaseQty, removeProduct, clearCart } =
   cart.actions
 export default cart.reducer;
