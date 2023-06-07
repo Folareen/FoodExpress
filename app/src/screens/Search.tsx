@@ -72,8 +72,8 @@ const Search = ({ navigation }: { navigation: any }) => {
                                 :
                                 <ScrollView>
 
-                                    {products?.map((arr) => (
-                                        <View className='flex-row'>
+                                    {products?.map((arr, index) => (
+                                        <View className='flex-row' key={index}>
                                             <ProductCard images={arr[0]['images']} slug={arr[0]['slug'].current} navigation={navigation} title={arr[0]['title']} price={arr[0]['price']} img={urlFor(arr[0]['cover_image']?.asset).url()} isSearchItem={true} />
                                             {
                                                 products.length % 2 == 0 && (
