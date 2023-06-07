@@ -65,9 +65,15 @@ const Search = ({ navigation }: { navigation: any }) => {
 
                         {
                             loading ?
-                                <View style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row' }}>
-                                    <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ borderRadius: 40 }} />
-                                    <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ marginLeft: 20, borderRadius: 40 }} />
+                                <View style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 50 }}>
+                                    <View style={{ width: Dimensions.get('screen').width / 3 }}>
+                                        <Skeleton animation="wave" width={100} height={104} style={{ borderRadius: 164, marginBottom: -66, marginRight: 'auto', marginLeft: 'auto' }} />
+                                        <Skeleton animation="wave" width={Dimensions.get('screen').width / 3} height={200} style={{ borderRadius: 40 }} />
+                                    </View>
+                                    <View style={{ width: Dimensions.get('screen').width / 3 }}>
+                                        <Skeleton animation="wave" width={100} height={104} style={{ borderRadius: 164, marginBottom: -66, marginRight: 'auto', marginLeft: 'auto' }} />
+                                        <Skeleton animation="wave" width={Dimensions.get('screen').width / 3} height={200} style={{ borderRadius: 40 }} />
+                                    </View>
                                 </View>
                                 :
                                 <ScrollView>
