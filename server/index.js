@@ -2,6 +2,7 @@ const express = require("express")
 require("dotenv").config()
 const connectToDB = require('./src/utils/connectToDB')
 const authRouter = require('./src/routes/auth')
+const ordersRouter = require('./src/routes/order')
 const notFound = require('./src/middlewares/notFound')
 const cors = require('cors')
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', authRouter)
+app.use('/api/v1', ordersRouter)
 app.use(notFound)
 
 const PORT = process.env.PORT || 5000
