@@ -6,6 +6,7 @@ import Navigation from './src/Navigation';
 import 'react-native-url-polyfill/auto';
 import { Provider } from 'react-redux'
 import store from './src/redux/store';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,11 +29,12 @@ export default function App() {
   }
 
   return (
-    <Provider store={store} >
-      <View onLayout={handleOnLayout} className='flex-1'>
-        <Navigation />
-      </View>
-    </Provider>
-
+    <RootSiblingParent>
+      <Provider store={store} >
+        <View onLayout={handleOnLayout} className='flex-1'>
+          <Navigation />
+        </View>
+      </Provider>
+    </RootSiblingParent>
   )
 }
