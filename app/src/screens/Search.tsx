@@ -35,6 +35,7 @@ const Search = ({ navigation }: { navigation: any }) => {
                 }
                 return acc;
             }, []);
+            console.log(newArray)
             setProducts(newArray)
         }
     }, [data])
@@ -79,11 +80,11 @@ const Search = ({ navigation }: { navigation: any }) => {
                                 <ScrollView>
 
                                     {products?.map((arr, index) => (
-                                        <View className='flex-row' key={index}>
+                                        <View className='!flex-row mt-4' key={index}>
                                             <ProductCard images={arr[0]['images']} slug={arr[0]['slug'].current} navigation={navigation} title={arr[0]['title']} price={arr[0]['price']} img={urlFor(arr[0]['cover_image']?.asset).url()} isSearchItem={true} />
                                             {
-                                                data.length % 2 == 0 && (
-                                                    <ProductCard images={arr[0]['images']} slug={arr[0]['slug'].current} navigation={navigation} title={arr[1]['title']} price={arr[1]['price']} img={urlFor(arr[1]['cover_image']?.asset).url()} isSearchItem={true} />
+                                                ((arr[1]?.images) != undefined) && (
+                                                    <ProductCard images={arr[1]['images']} slug={arr[1]['slug'].current} navigation={navigation} title={arr[1]['title']} price={arr[1]['price']} img={urlFor(arr[1]['cover_image']?.asset).url()} isSearchItem={true} />
                                                 )
                                             }
                                         </View>
