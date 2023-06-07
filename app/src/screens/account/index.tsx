@@ -5,12 +5,12 @@ import { RootState } from '../../redux/store'
 import Profile from './Profile'
 import Auth from './Auth'
 
-const Account = () => {
+const Account = ({ navigation }: { navigation: any }) => {
     const { user } = useSelector((state: RootState) => state.auth)
     return (
         <>
             {
-                user ? <Profile /> : <Auth />
+                user ? <Profile navigation={navigation} /> : <Auth />
             }
         </>
     )
