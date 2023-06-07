@@ -99,11 +99,17 @@ const Home = ({ navigation }: { navigation: any }) => {
 
             {
                 (loading || categories.loading) ?
-                    <View>
+                    <View className=''>
 
-                        <ScrollView horizontal style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row' }} showsHorizontalScrollIndicator={false}>
-                            <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ borderRadius: 40 }} />
-                            <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ marginLeft: 20, borderRadius: 40 }} />
+                        <ScrollView horizontal style={{ marginTop: 24, marginLeft: -30, flexDirection: 'row', }} showsHorizontalScrollIndicator={false}>
+                            <View className='w-[184px] '>
+                                <Skeleton animation="wave" width={164} height={164} style={{ borderRadius: 164, marginBottom: -96, marginHorizontal: 15 }} />
+                                <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ borderRadius: 40 }} />
+                            </View>
+                            <View className='w-[184px] ml-12 '>
+                                <Skeleton animation="wave" width={164} height={164} style={{ borderRadius: 164, marginBottom: -96, marginHorizontal: 15 }} />
+                                <Skeleton animation="wave" width={Dimensions.get('screen').width / 2} height={250} style={{ borderRadius: 40 }} />
+                            </View>
                         </ScrollView>
                     </View>
                     :
@@ -139,7 +145,9 @@ const Home = ({ navigation }: { navigation: any }) => {
                 }}>
                     <MaterialCommunityIcons name="account-outline" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity className='opacity-30'>
+                <TouchableOpacity className='opacity-30' onPress={() => {
+                    navigation.navigate('history')
+                }}>
                     <MaterialIcons name="history" size={24} color="black" />
                 </TouchableOpacity>
             </View>
