@@ -14,6 +14,8 @@ import jwtDecode from 'jwt-decode'
 import { setAxiosToken } from './config/api'
 import { useDispatch } from 'react-redux'
 import { authenticate } from './redux/features/authSlice'
+import Checkout from './screens/Checkout'
+import OrderHistory from './screens/OrderHistory'
 
 const Stack = createNativeStackNavigator()
 
@@ -38,6 +40,8 @@ const Navigation = () => {
                 <Stack.Screen name='search' component={Search} options={{ headerShown: false }} />
                 <Stack.Screen name='product-details' component={ProductDetails} options={{ headerShown: false }} />
                 <Stack.Screen name='cart' component={Cart} options={{ headerShown: false }} />
+                <Stack.Screen name='checkout' component={Checkout} options={{ headerShown: false }} />
+                <Stack.Screen name='history' component={OrderHistory} options={{ headerShown: false }} />
                 <Stack.Screen name='account' component={Account} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
