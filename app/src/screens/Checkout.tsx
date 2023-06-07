@@ -1,11 +1,13 @@
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../redux/store'
 import { Overlay } from '@rneui/themed'
 import { checkout } from '../services/checkoutService'
 import { AntDesign, Entypo, MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 import formatPrice from '../utils/formatPrice'
+import { clearCart } from '../redux/features/cartSlice'
+import Toast from 'react-native-root-toast'
 
 const Checkout = ({ navigation }: { navigation: any }) => {
     const { products, quantity, subTotal } = useSelector((state: RootState) => state.cart)
@@ -15,6 +17,8 @@ const Checkout = ({ navigation }: { navigation: any }) => {
 
     const [paymentMethod, setPaymentMethod] = useState<'card' | 'bank account'>('card')
     const [deliveryMethod, setDeliveryMethod] = useState<'door delivery' | 'pickup'>('door delivery')
+
+    const dispatch = useDispatch()
 
     return (
         <View className='bg-[#F6F6F9] flex-1 px-[40px]'>
@@ -122,6 +126,17 @@ const Checkout = ({ navigation }: { navigation: any }) => {
                     try {
                         setSubmitting(true)
                         await checkout({ items: products, total: subTotal, totalQty: quantity })
+                        Toast.show(`Order completed successfully!`, {
+                            duration: Toast.durations.SHORT,
+                            position: 60,
+                            shadow: true,
+                            animation: true,
+                            hideOnPress: true,
+                            delay: 0,
+                            backgroundColor: 'green',
+                            textColor: '#fff'
+                        });
+                        dispatch(clearCart())
                     } catch (error: any) {
                         setError(error.message)
                     } finally {
