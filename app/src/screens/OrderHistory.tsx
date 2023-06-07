@@ -64,7 +64,7 @@ const OrderHistory = ({ navigation }: { navigation: any }) => {
                         )}
                     />
                     :
-                    <View className=' flex-1 items-center justify-center'>
+                    <View className=' flex-1 items-center justify-center relative'>
                         <AntDesign name="calendar" size={64} color="#00000074" />
                         <Text className='text-black text-[28px] font-[bold]   flex-wrap my-3'>
                             No history yet
@@ -73,6 +73,16 @@ const OrderHistory = ({ navigation }: { navigation: any }) => {
                             Hit the orange button down
                             below to Create an order
                         </Text>
+
+                        <TouchableOpacity className='bg-primary absolute bottom-3  rounded-[30px]  py-[20px] w-4/5 left-[10%] right-[10%] items-center ' onPress={
+                            () => {
+                                navigation.navigate('home')
+                            }
+                        }>
+                            <Text className='text-[#ffffff] text-[16px] font-[bold]'>
+                                Start ordering
+                            </Text>
+                        </TouchableOpacity>
                     </View>
             }
 
