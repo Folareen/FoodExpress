@@ -132,7 +132,9 @@ const Home = ({ navigation }: { navigation: any }) => {
                 <TouchableOpacity className='opacity-30'>
                     <Feather name="heart" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity className='opacity-30'>
+                <TouchableOpacity className='opacity-30' onPress={() => {
+                    navigation.navigate('account')
+                }}>
                     <MaterialCommunityIcons name="account-outline" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity className='opacity-30'>

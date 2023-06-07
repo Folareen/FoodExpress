@@ -1,8 +1,8 @@
 import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import Login from '../components/auth/Login'
-import Signup from '../components/auth/Signup'
+import Login from '../../components/auth/Login'
+import Signup from '../../components/auth/Signup'
 
 const Auth = () => {
     const [currForm, setCurrForm] = useState<'login' | 'sign up'>('login')
@@ -11,7 +11,7 @@ const Auth = () => {
         <KeyboardAvoidingView className='flex-1 bg-[#EDEDED]'>
             <ScrollView className='flex-1  '>
                 <View className='items-center bg-white justify-center rounded-b-[30px] h-[350px]'>
-                    <Image source={require('../assets/images/logo.png')} className='w-[150px] h-[160px] ' />
+                    <Image source={require('../../assets/images/logo.png')} className='w-[150px] h-[160px] ' />
                     <View className='flex-row absolute bottom-0 left-[50px] right-[50px] w-[calc(100% - 100px]'>
                         {
                             ['login', 'sign up'].map(
