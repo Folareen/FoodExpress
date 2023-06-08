@@ -9,7 +9,7 @@ const getOrderHistory = async (req, res) => {
 
         if (!decodedUser) return res.status(401).json({ message: 'unauthorized' })
 
-        const orders = await Order.find({userId: decodedUser._id);
+        const orders = await Order.find({userId: decodedUser._id});
 
         console.log(orders, decodedUser._id)
 
